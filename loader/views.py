@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from main.views import DATABASE
 
 loader_blueprint = Blueprint("loader_blueprint", __name__, template_folder="templates")
 
@@ -8,11 +9,10 @@ def loader_page():
     return render_template("post_form.html")
 
 
-@loader_blueprint.route("/uploads/", methods=['GET', 'POST'])
+@loader_blueprint.route("/upload", methods=['POST'])
 def uploaded_page():
-    if request.method == 'POST':
-        picture = request.files.get("picture")
-        picture.save(f"./uploads/{picture.filename}")
-        text = request.form.get("content")
-        return render_template("post_uploaded.html", added_text=text)
-    return render_template("post_uploaded.html")
+    picture = request.files.get("picture")
+    picture.save(f"../../static/{picture.filename}")
+    text = request.values.get("content")
+    DATABASE.json_write({"pic": "./static/"+picture.filename, "content": text})
+    return render_template("post_uploaded.html", added_text=text, added_picture=picture.filename)

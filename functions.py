@@ -1,5 +1,6 @@
 from config import POST_PATH
 from json import load as json_load
+from json import dump as json_dump
 from pprint import pprint as pp
 from sys import getsizeof as gs
 from re import findall
@@ -16,6 +17,12 @@ class DataBase:
     def _json_loader(self) -> list:
         with open(self.path, 'r', encoding='utf-8') as f:
             return json_load(f)
+
+    def json_write(self, data_to_write):
+        database = self._json_loader()
+        database.append(data_to_write)
+        with open(self.path, 'w', encoding="utf-8") as f:
+            json_dump(database, f, ensure_ascii=False)
 
     def class_database_loader(self) -> None:
         for line in self._json_loader():
