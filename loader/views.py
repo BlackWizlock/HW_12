@@ -12,7 +12,7 @@ def loader_page():
 @loader_blueprint.route("/upload", methods=['POST'])
 def uploaded_page():
     picture = request.files.get("picture")
-    picture.save(f"../../static/{picture.filename}")
+    picture.save(f"./static/{picture.filename}")
     text = request.values.get("content")
-    DATABASE.json_write({"pic": "./static/"+picture.filename, "content": text})
+    DATABASE.json_write({"pic": "../../static/"+picture.filename, "content": text})
     return render_template("post_uploaded.html", added_text=text, added_picture=picture.filename)
