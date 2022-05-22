@@ -22,7 +22,7 @@ class DataBase:
         database = self._json_loader()
         database.append(data_to_write)
         with open(self.path, 'w', encoding="utf-8") as f:
-            json_dump(database, f, ensure_ascii=False)
+            json_dump(database, f, ensure_ascii=False, indent=2)
 
     def class_database_loader(self) -> None:
         for line in self._json_loader():

@@ -13,7 +13,7 @@
     <h1>Пост добавлен! </h1>
 
     <div class="post">
-        <img src="{{ url_for('static', filename=added_picture) }}"
+        <img src="/uploads/{{ added_picture }}"
              width="100%" alt="">
         <p>{{ added_text }}</p>
     </div>
