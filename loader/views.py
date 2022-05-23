@@ -21,9 +21,13 @@ def loader_page():
 @loader_blueprint.route("/uploads/<path:path>")
 @loader_blueprint.route("/uploads", methods=["POST"])
 def uploaded_page(path=None):
+    """
+    Вьюшка загрузки нового сообщения - методом POST загрузка, без методо рендер
+    :param path: Путь загрузки
+    """
     if request.method == "POST":
         picture = request.files.get("picture")
-        if not picture:
+        if not picture:  # Обработка исключения/ошибок
             logger.error("Попытка загрузку неразрешенного типа файла")
             abort(400)
         elif picture.filename == "":
@@ -46,6 +50,8 @@ def uploaded_page(path=None):
     else:
         return send_from_directory("uploads", path)
 
+
+# Обработка ошибок Блюпринта
 
 @loader_blueprint.errorhandler(413)
 @loader_blueprint.errorhandler(400)

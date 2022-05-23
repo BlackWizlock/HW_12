@@ -9,12 +9,18 @@ DATABASE = DataBase()
 
 @main_blueprint.route("/")
 def main_page():
+    """
+    Вьюшка - основная. При обращении обновляем загрузку БД, т.к. могли появиться новые сообщения
+    """
     DATABASE.class_database_loader()
     return render_template("index.html")
 
 
 @main_blueprint.route("/post_list/")
 def post_list():
+    """
+    Вьюшка - результат поиска в БД, обработка пустого поиска
+    """
     search_request = request.args.get("s")
     logger.info(f"Search request: {search_request}")
     if search_request:
@@ -25,6 +31,8 @@ def post_list():
         )
     return render_template("post_list.html")
 
+
+# Обработка ошибок Блюпринта
 
 @main_blueprint.errorhandler(404)
 def page_not_found(error):

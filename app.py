@@ -9,6 +9,5 @@ app.config["UPLOAD_EXTENSIONS"] = [".jpg", ".png", ".gif"]
 app.register_blueprint(main_blueprint, url_prefix="/")
 app.register_blueprint(loader_blueprint, url_prefix="/")
 
-
 if __name__ == "__main__":
     app.run(debug=True)
