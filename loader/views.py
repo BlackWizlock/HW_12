@@ -4,11 +4,10 @@ from flask import (
     request,
     send_from_directory,
     abort,
-    current_app,
 )
 from main.views import DATABASE
 import os
-from logger_init import logger
+import logger_init
 
 loader_blueprint = Blueprint("loader_blueprint", __name__, template_folder="templates")
 
@@ -28,16 +27,16 @@ def uploaded_page(path=None):
     if request.method == "POST":
         picture = request.files.get("picture")
         if not picture:  # Обработка исключения/ошибок
-            logger.error("Попытка загрузку неразрешенного типа файла")
+            logger_init.logger_mine.error("Попытка загрузку неразрешенного типа файла")
             abort(400)
         elif picture.filename == "":
             abort(400)
-            logger.info("Попытка загрузку сообщения без файла")
+            logger_init.logger_mine.info("Попытка загрузку сообщения без файла")
         elif (
-                os.path.splitext(picture.filename)[1].lower()
-                not in current_app.config["UPLOAD_EXTENSIONS"]
+            os.path.splitext(picture.filename)[1].lower()
+            not in current_app.config["UPLOAD_EXTENSIONS"]
         ):
-            logger.info("Попытка загрузку неразрешенного типа файла")
+            logger_init.logger_mine.info("Попытка загрузку неразрешенного типа файла")
             abort(400)
         picture.save(f"./uploads/{picture.filename}")
         text = request.values.get("content")
@@ -52,6 +51,7 @@ def uploaded_page(path=None):
 
 
 # Обработка ошибок Блюпринта
+
 
 @loader_blueprint.errorhandler(413)
 @loader_blueprint.errorhandler(400)

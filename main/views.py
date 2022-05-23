@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
 from functions import DataBase
-from logger_init import logger
+import logger_init
 
 main_blueprint = Blueprint("main_blueprint", __name__, template_folder="templates")
 
@@ -22,7 +22,7 @@ def post_list():
     Вьюшка - результат поиска в БД, обработка пустого поиска
     """
     search_request = request.args.get("s")
-    logger.info(f"Search request: {search_request}")
+    logger_init.logger_mine.info(f"Search request: {search_request}")
     if search_request:
         return render_template(
             "post_list.html",
@@ -33,6 +33,7 @@ def post_list():
 
 
 # Обработка ошибок Блюпринта
+
 
 @main_blueprint.errorhandler(404)
 def page_not_found(error):

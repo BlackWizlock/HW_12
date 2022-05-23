@@ -1,6 +1,7 @@
 from flask import Flask
 from main.views import main_blueprint
 from loader.views import loader_blueprint
+import logging
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
