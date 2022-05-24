@@ -4,6 +4,7 @@ from flask import (
     request,
     send_from_directory,
     abort,
+    current_app
 )
 from main.views import DATABASE
 import os
