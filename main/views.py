@@ -2,7 +2,9 @@ from flask import Blueprint, render_template, request
 from functions import DataBase
 import logger_init
 
-main_blueprint = Blueprint("main_blueprint", __name__, template_folder="templates")
+main_blueprint = Blueprint("main_blueprint",
+                           __name__,
+                           template_folder="templates")
 
 DATABASE = DataBase()
 
@@ -10,7 +12,8 @@ DATABASE = DataBase()
 @main_blueprint.route("/")
 def main_page():
     """
-    Вьюшка - основная. При обращении обновляем загрузку БД, т.к. могли появиться новые сообщения
+    Вьюшка - основная. При обращении обновляем загрузку БД, т.к. могли появиться 
+    новые сообщения
     """
     DATABASE.class_database_loader()
     return render_template("index.html")
@@ -37,12 +40,11 @@ def post_list():
 
 @main_blueprint.errorhandler(404)
 def page_not_found(error):
-    return f"<h1><center><font color='red'>Error 404</font><br>Something goes wrong! Page not found.</center></h1><hr>"
+    return "<h1><center><font color='red'>Error 404</font><br>Something goes wrong!"\
+            "Page not found.</center></h1><hr>"
 
 
 @main_blueprint.errorhandler(400)
 def database_not_found(error):
-    return (
-        f"<h1><center><font color='red'>Error</font>"
-        f"<br>Database - not found!</center></h1><hr>"
-    )
+    return ("<h1><center><font color='red'>Error</font>"
+            "<br>Database - not found!</center></h1><hr>")
